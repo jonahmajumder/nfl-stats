@@ -6,6 +6,10 @@
 function loadSectionSelector () {
 
     var thispagelink = window.location.pathname.split("/").pop();
+
+    if (thispagelink == "index.html") {
+        thispagelink = ""; // handle local usage
+    }
     var pagesIndex = pages.map(function(d) {return d.link;}).indexOf(thispagelink);
     var Npages = pages.length;
     var totalChars = pages.reduce(function(tot, elem) {return tot + elem.name.length}, 0);
