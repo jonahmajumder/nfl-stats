@@ -21,18 +21,23 @@ function addMeters() {
 	var mainContainer = document.getElementById("contentContainer");
 
 	Nmeters = 3;
-	var newframe;
-	var meterSize = 300;
+	var newframe, meter;
+	var meterSize = 200;
 
 	for (var i = 0; i < Nmeters; i++) {
 		newframe = document.createElement("iframe");
 		newframe.setAttribute("id", "iframe" + i);
 		newframe.setAttribute("src", "winMeter/winMeter.html");
 		// newframe.setAttribute("referrerPolicy", "unsafe-url");
+		newframe.setAttribute("width", meterSize);
+		newframe.setAttribute("height", meterSize);
 		mainContainer.appendChild(newframe)
+
+		meter = newframe.contentWindow.document.getElementById("meter");
+		meter.setAttribute("width", meterSize);
+		meter.setAttribute("height", meterSize);
 	}
-	var newdoc = document.getElementById("iframe0").contentWindow.document;
-	console.log(newdoc);
+
 }
 
 function makeProbURL(gamestruct) {

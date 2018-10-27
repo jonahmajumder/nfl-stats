@@ -98,7 +98,7 @@ function string2doc (htmlString) {
 function scrapeURL(url) {
 	console.log("Scraping from url " + url + ".");
 	var htmlString;
-	var newurl = "http://anyorigin.com/go?url=" + encodeURIComponent(url) + "&callback=?";
+	var newurl = "https://allorigins.me/get?url=" + encodeURIComponent(url) + "&callback=?";
 	disableGetButton(true);
 	clearData();
 	var elem, table;

@@ -7,8 +7,8 @@ function loadSectionSelector () {
 
     var thispagelink = window.location.pathname.split("/").pop();
 
-    if (thispagelink == "index.html") {
-        thispagelink = ""; // handle local usage
+    if (thispagelink == "") {
+        thispagelink = "index.html"; // handle local usage
     }
     var pagesIndex = pages.map(function(d) {return d.link;}).indexOf(thispagelink);
     var Npages = pages.length;
