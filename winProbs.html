@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NFL Data (2)</title>
+    <link rel="stylesheet" type="text/css" href="frontpage.css">
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="scrape.js"></script>
+    <script type="text/javascript" src="load.js"></script>
+    <script type="text/javascript" src="definitions.js"></script>
+    <script type="text/javascript" src="require.js"></script>
+        <script type="text/javascript" src="winProbs.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){            
+            addMeters();
+
+            loadSectionSelector();
+            adjust_sections();
+        });
+        window.onresize = function(){
+            adjust_sections();
+        };
+    </script>
+</head>
+<body>
+    <div id=outerContainer>
+        <div id=bannerContainer style="text-align: center;">
+            <div id=title>
+                <h1>NFL Fantasy Data</h1>
+            </div>
+            <div id=sectionSelector>
+            </div>
+        </div>
+        <div id="contentContainer">
+        </div>
+        
+    </div>
+</body>
+</html>

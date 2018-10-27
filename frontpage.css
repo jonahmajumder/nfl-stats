@@ -1,0 +1,99 @@
+
+:root {
+    --framecolor: steelblue;
+    --backtabcolor: navy;
+    --pressedcolor: steelblue;
+}
+
+html {
+    background-color: grey;
+}
+
+iframe {
+    border: none;
+}
+
+#outerContainer {
+    text-align: center;
+    float: left;
+    width: 100%;
+    display:block;
+    overflow:auto;
+}
+
+#bannerContainer {
+    text-align: center;
+    float: left;
+    width: 100%;
+    font-family: 'Encode Sans Expanded', sans-serif;
+    margin: 0;
+    
+}
+
+#sectionSelector {
+    width: 100%;
+    float: left;
+}
+
+.sectionButton {
+    /*width: calc(50% - 3px);*/
+    display: inline-block;
+    border-radius: 8px 8px 0 0;
+    padding: 10px;
+    border: none;
+    outline: none;
+    /*font-size: 24px;*/
+    font-family: 'Encode Sans Expanded', sans-serif;
+    color: white;
+}
+
+.thispage {
+    background-color: var(--framecolor);  
+}
+
+.thispage:active {
+    background-color: var(--framecolor);
+}
+
+.otherpage {
+    background-color: var(--backtabcolor);
+}
+
+.otherpage:active {
+    background-color: var(--pressedcolor);
+    box-shadow: inset 0 0 0px 5px var(--backtabcolor);
+}
+
+#belowSectionDiv {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background-color: var(--framecolor);
+    margin: auto;
+    display: block;
+}
+
+/* ---------------   content  -------------- */
+
+#contentContainer {
+    float: left;
+    width: calc(100% - 10px);
+    border: 5px solid var(--framecolor);
+}
+
+#leftContentContainer {
+    float: center;
+    padding: 10px;
+    margin: 5px;
+    border: 3px solid black;
+    box-shadow: 0px 0 5px;
+}
+
+
+/* ---------------   histogram  -------------- */
+
+#histSelect {
+    margin: 10px;
+}
+
+
