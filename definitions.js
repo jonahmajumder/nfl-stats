@@ -2,7 +2,7 @@
 
 // set "global" page names and links in this object
 var pages = [
-    {name: "Histograms", link: "index.html"},
+    {name: "Histograms", link: ""},
     {name: "NFL Win Probabilities", link: "winProbs.html"},
 ];
 
