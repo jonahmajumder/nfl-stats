@@ -98,13 +98,13 @@ function string2doc (htmlString) {
 function scrapeURL(url) {
 	console.log("Scraping from url " + url + ".");
 	var htmlString;
-	var newurl = "http://www.whateverorigin.org/get?url=" + encodeURIComponent(url) + "&callback=?";
+	var newurl = "http://anyorigin.com/go?url=" + encodeURIComponent(url) + "&callback=?";
 	disableGetButton(true);
 	clearData();
 	var elem, table;
 
 	var scrapePromise = new Promise ((resolve, reject) => {
-		$.getJSON(url).then( function(body, status) {	
+		$.getJSON(newurl).then( function(body, status) {	
 			htmlString = body.contents;
 			resolve(htmlString);
 		});
