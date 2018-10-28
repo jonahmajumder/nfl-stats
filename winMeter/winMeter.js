@@ -1,16 +1,15 @@
 // winMeter.js
 
-function positionElements () {
-var parentsvg = document.getElementById("meter");
-var parentdims = [parseInt(parentsvg.getAttribute("width")), parseInt(parentsvg.getAttribute("height"))];
+function positionElements (parent) {
+var parentdims = [parseInt(parent.getAttribute("width")), parseInt(parent.getAttribute("height"))];
 
 var meterWorkingRadius = 0.4 * Math.min(parentdims[0], parentdims[1]);
 var dialOuterRad = 0.8 * meterWorkingRadius;
 var dialInnerRad = 0.05 * parentdims[1];
 
 // size and position meter border circles
-var outerCircle = document.getElementById("outerBorder");
-var innerCircle = document.getElementById("innerBorder");
+var outerCircle = parent.getElementById("outerBorder");
+var innerCircle = parent.getElementById("innerBorder");
 
 outerCircle.setAttribute("cx", parentdims[0]/2);
 outerCircle.setAttribute("cy", parentdims[1]/2);
@@ -21,7 +20,7 @@ innerCircle.setAttribute("r", meterWorkingRadius);
 
 
 // create ticks around border
-var tix = document.getElementById("tix");
+var tix = parent.getElementById("tix");
 var tickOuterRadius = meterWorkingRadius;
 var tickInnerRadius = 0.9*meterWorkingRadius;
 var tickMiddleRadius = 0.5*tickOuterRadius + 0.5*tickInnerRadius;
@@ -51,7 +50,7 @@ for (var i = 0; i < tickOuter.length; i++) {
 tix.setAttribute("d", dstr);
 
 // create dial path element
-var dial = document.getElementById("dial");
+var dial = parent.getElementById("dial");
 var bzFrac = 0.25;
 
 var dstr = "";
@@ -65,18 +64,18 @@ dstr += "z ";
 // console.log(dstr);
 dial.setAttribute("d", dstr);
 
-var dialPin = document.getElementById("dialPin");
+var dialPin = parent.getElementById("dialPin");
 dialPin.setAttribute("cx", parentdims[0]/2);
 dialPin.setAttribute("cy", parentdims[1]/2);
 dialPin.setAttribute("r", 0.3*dialInnerRad);
 
 
 // position team labels
-var home = document.getElementById("homeTeamCont");
-var away = document.getElementById("awayTeamCont");
+var home = parent.getElementById("homeTeamCont");
+var away = parent.getElementById("awayTeamCont");
 
-var homeLabel = document.getElementById("homeTeamLabel");
-var awayLabel = document.getElementById("awayTeamLabel");
+var homeLabel = parent.getElementById("homeTeamLabel");
+var awayLabel = parent.getElementById("awayTeamLabel");
 
 // set the font sizes ahead so that we can calculate size
 var labelFSize = 0.32 * parentdims[0] / 3;
@@ -114,14 +113,13 @@ away.setAttribute("ry", 2 + Math.min(...parentdims)/75);
 
 }
 
-function rotateDialToPercentage (pct) {
-	var parentsvg = document.getElementById("meter");
-	var parentdims = [parseInt(parentsvg.getAttribute("width")), parseInt(parentsvg.getAttribute("height"))];
+function rotateDialToPercentage (parent, pct) {
+	var parentdims = [parseInt(parent.getAttribute("width")), parseInt(parent.getAttribute("height"))];
 
 	var validatedPct = Math.min(Math.max(pct, 0), 100);
 	var angle = validatedPct/100*180 - 90;
 
-	var dial = document.getElementById("dial");
+	var dial = parent.getElementById("dial");
 	dial.setAttribute("transform", "rotate(" + angle + "," + parentdims[0]/2 + "," + parentdims[1]/2 + ")");
 }
 

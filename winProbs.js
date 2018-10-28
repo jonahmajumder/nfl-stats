@@ -31,11 +31,7 @@ function addMeters() {
 		// newframe.setAttribute("referrerPolicy", "unsafe-url");
 		newframe.setAttribute("width", meterSize);
 		newframe.setAttribute("height", meterSize);
-		mainContainer.appendChild(newframe)
-
-		meter = newframe.contentWindow.document.getElementById("meter");
-		meter.setAttribute("width", meterSize);
-		meter.setAttribute("height", meterSize);
+		mainContainer.appendChild(newframe);
 	}
 
 }
