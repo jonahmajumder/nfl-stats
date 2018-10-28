@@ -20,16 +20,10 @@ sample_gamestruct = {
 function addMeters() {
 	var mainContainer = document.getElementById("contentContainer");
 
-	var newframe, meter;
+	var newmeter;
 
 	for (var i = 0; i < Nmeters; i++) {
-		newframe = document.createElement("iframe");
-		newframe.setAttribute("id", "iframe" + i);
-		newframe.setAttribute("src", "winMeter/winMeter.html");
-		// newframe.setAttribute("referrerPolicy", "unsafe-url");
-		newframe.setAttribute("width", meterSize);
-		newframe.setAttribute("height", meterSize);
-		mainContainer.appendChild(newframe);
+		genMeterHere(mainContainer, [meterSize, meterSize]);
 	}
 
 }

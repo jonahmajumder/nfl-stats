@@ -11,17 +11,14 @@
     <script type="text/javascript" src="definitions.js"></script>
     <script type="text/javascript" src="require.js"></script>
     <script type="text/javascript" src="winProbs.js"></script>
-    <script type="text/javascript" src="winMeter/winMeter.js"></script>
-    <script type="text/javascript" src="winMeter/meterDefs.js"></script>
+    <script type="text/javascript" src="winMeter.js"></script>
+    <script type="text/javascript" src="meterDefs.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){            
-            addMeters();
-            if ((document.domain).length > 0) {
-                resizeMeters();
-            }
-
             loadSectionSelector();
             adjust_sections();
+            
+            addMeters();
         });
         window.onresize = function(){
             adjust_sections();
