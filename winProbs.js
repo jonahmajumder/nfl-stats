@@ -20,9 +20,7 @@ sample_gamestruct = {
 function addMeters() {
 	var mainContainer = document.getElementById("contentContainer");
 
-	Nmeters = 3;
 	var newframe, meter;
-	var meterSize = 200;
 
 	for (var i = 0; i < Nmeters; i++) {
 		newframe = document.createElement("iframe");
@@ -32,6 +30,21 @@ function addMeters() {
 		newframe.setAttribute("width", meterSize);
 		newframe.setAttribute("height", meterSize);
 		mainContainer.appendChild(newframe);
+	}
+
+}
+
+function resizeMeters() {
+	var frame, meter;
+	for (var i = 0; i < Nmeters; i++) {
+		frame = document.getElementById("frame" + i);
+		meter = frame.contentWindow.document.getElementById("meter");
+
+		meter.setAttribute("width", meterSize-20);
+		meter.setAttribute("height", meterSize-20);
+
+		positionElements(meters);
+
 	}
 
 }

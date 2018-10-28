@@ -1,5 +1,8 @@
 // meterDefs
 
+var Nmeters = 3;
+var meterSize = 200;
+
 teams = {
 
 "ARI": {"fullname": "Arizona Cardinals", "colors": ["rgb(151,35,63)", "rgb(255,182,18)"]},
