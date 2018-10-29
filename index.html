@@ -36,33 +36,31 @@
             <div id=sectionSelector></div>
         </div>
         <div id="contentContainer">
-            <div id="leftContentContainer">
-                <div id="dataFetch">
-                    <select id="yearSelect" style="width: 80px; font-size: 14pt;">
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
-                        <option value="2015">2015</option>
-                    </select>
-                    <select id="typeSelect" style="width: 120px; font-size: 14pt;">
-                        <option value="passing">Passing</option>
-                        <option value="rushing">Rushing</option>
-                        <option value="receiving">Receiving</option>
-                        <option value="defense">Defense</option>
-                        <option value="kicking">Kicking</option>
-                        <option value="returns">Returns</option>
-                        <option value="scoring">Scoring</option>
-                        <option value="fantasy">Fantasy</option>
-                    </select>
-                    <button id="getDataButton" style="width: 100px; font-size: 14pt;" onclick="scrapeURL(getURL());">Get Data!</button>
-                </div>
-                <div id="histSelect">
-                    <select id="histColSelector" style="width: 200px; font-size: 14pt;" disabled="true"></select>
-                    <button id="generateHistButton" style="width: 100px; font-size: 14pt;" disabled="true" onclick="prepareData();">Generate</button>
-                </div>
-                <div id="histContainer">
-                    <svg id="histWindow"></svg>
-                </div>
+            <div id="dataFetch">
+                <select id="yearSelect" style="width: 80px; font-size: 14pt;">
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                </select>
+                <select id="typeSelect" style="width: 120px; font-size: 14pt;">
+                    <option value="passing">Passing</option>
+                    <option value="rushing">Rushing</option>
+                    <option value="receiving">Receiving</option>
+                    <option value="defense">Defense</option>
+                    <option value="kicking">Kicking</option>
+                    <option value="returns">Returns</option>
+                    <option value="scoring">Scoring</option>
+                    <option value="fantasy">Fantasy</option>
+                </select>
+                <button id="getDataButton" style="width: 100px; font-size: 14pt;" onclick="scrapeURL(getURL());">Get Data!</button>
+            </div>
+            <div id="histSelect">
+                <select id="histColSelector" style="width: 200px; font-size: 14pt;" disabled="true"></select>
+                <button id="generateHistButton" style="width: 100px; font-size: 14pt;" disabled="true" onclick="prepareData();">Generate</button>
+            </div>
+            <div id="histContainer">
+                <svg id="histWindow"></svg>
             </div>
         </div>
     </div>

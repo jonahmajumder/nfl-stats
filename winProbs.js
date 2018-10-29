@@ -20,25 +20,15 @@ sample_gamestruct = {
 function addMeters() {
 	var mainContainer = document.getElementById("contentContainer");
 
-	var newmeter;
+	var newMeter;
+	var teamCodes = Object.keys(teams);
+	var Nmeters = Math.floor(teamCodes.length/2);
 
 	for (var i = 0; i < Nmeters; i++) {
-		genMeterHere(mainContainer, [meterSize, meterSize]);
-	}
+		newMeter = genMeterHere(mainContainer, [meterSize, meterSize]);
 
-}
-
-function resizeMeters() {
-	var frame, meter;
-	for (var i = 0; i < Nmeters; i++) {
-		frame = document.getElementById("frame" + i);
-		meter = frame.contentWindow.document.getElementById("meter");
-
-		meter.setAttribute("width", meterSize-20);
-		meter.setAttribute("height", meterSize-20);
-
-		positionElements(meters);
-
+		setMeterTeams(newMeter, teamCodes[2*i], teamCodes[2*i+1]);
+		setMeterPercentage(newMeter, Math.random()*100);
 	}
 
 }

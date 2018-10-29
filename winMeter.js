@@ -34,7 +34,7 @@ innerCircle.setAttribute("stroke", "grey");
 outerCircle.setAttribute("stroke-width", 1);
 innerCircle.setAttribute("stroke-width", 1);
 outerCircle.setAttribute("fill", "silver");
-innerCircle.setAttribute("fill", "white");
+innerCircle.setAttribute("fill", "black");
 
 outerCircle.setAttribute("cx", svgdims[0]/2);
 outerCircle.setAttribute("cy", svgdims[1]/2);
@@ -52,7 +52,7 @@ svg.appendChild(gtick);
 
 var tix = document.createElementNS(xmlns, 'path');
 tix.setAttribute("class", "tix");
-tix.setAttribute("stroke", "black");
+tix.setAttribute("stroke", "white");
 
 var tickOuterRadius = meterWorkingRadius;
 var tickInnerRadius = 0.9*meterWorkingRadius;
@@ -89,7 +89,7 @@ var dial = document.createElementNS(xmlns, 'path');
 dial.setAttribute("class", "dial");
 
 dial.setAttribute("fill", "lightgrey");
-dial.setAttribute("stroke", "grey");
+dial.setAttribute("stroke", "none");
 
 var bzFrac = 0.25;
 var dstr = "";
@@ -147,6 +147,8 @@ homeRect.setAttribute("stroke", "black");
 awayRect.setAttribute("stroke", "black");
 homeRect.setAttribute("fill", "lightgrey");
 awayRect.setAttribute("fill", "lightgrey");
+homeText.setAttribute("fill", "black");
+awayText.setAttribute("fill", "black");
 homeText.innerHTML = "TM1";
 awayText.innerHTML = "TM2";
 // ----------------------------------------
@@ -184,19 +186,63 @@ awayRect.setAttribute("rx", 2 + Math.min(...svgdims)/75);
 homeRect.setAttribute("ry", 2 + Math.min(...svgdims)/75);
 awayRect.setAttribute("ry", 2 + Math.min(...svgdims)/75);
 
+return svg;
 
 }
 
-function rotateDialToPercentage (svg) {
-	var svgdims = [parseInt(svg.getAttribute("width")), parseInt(svg.getAttribute("height"))];
+function setMeterPercentage (metersvg, pct) {
+	var svgdims = [parseInt(metersvg.getAttribute("width")), parseInt(metersvg.getAttribute("height"))];
 
 	var validatedPct = Math.min(Math.max(pct, 0), 100);
 	var angle = validatedPct/100*180 - 90;
 
-	var dial = parent.getElementById("dial");
+	var dial = metersvg.getElementsByClassName("dial")[0];
 	dial.setAttribute("transform", "rotate(" + angle + "," + svgdims[0]/2 + "," + svgdims[1]/2 + ")");
 }
 
+
+function setMeterTeams(metersvg, homeCode, awayCode) {
+	var svgdims = [parseInt(metersvg.getAttribute("width")), parseInt(metersvg.getAttribute("height"))];
+	homeCode = homeCode.toUpperCase();
+	awayCode = awayCode.toUpperCase();
+	var homeTeam = teams[homeCode];
+	var awayTeam = teams[awayCode];
+
+	var undefFlag = false;
+	if (homeTeam == undefined) {
+		console.log("Home team \"" + homeCode + "\" not recognized.");
+		undefFlag = true;
+	}
+	if (awayTeam == undefined) {
+		console.log("Away team \"" + awayCode + "\" not recognized.");
+		undefFlag = true;
+	}
+	if (undefFlag) {
+		return;
+	}
+
+	var homeClrs = homeTeam["colors"];
+	var awayClrs = awayTeam["colors"];
+
+	var homeRect = metersvg.getElementsByClassName("homeTeamRect")[0];
+	var awayRect = metersvg.getElementsByClassName("awayTeamRect")[0];
+
+	var homeText = metersvg.getElementsByClassName("homeTeamText")[0];
+	var awayText = metersvg.getElementsByClassName("awayTeamText")[0];
+
+	homeRect.setAttribute("stroke", homeClrs[0]);
+	awayRect.setAttribute("stroke", awayClrs[0]);
+	homeRect.setAttribute("fill", homeClrs[1]);
+	awayRect.setAttribute("fill", awayClrs[1]);
+	homeText.setAttribute("fill", homeClrs[0]);
+	awayText.setAttribute("fill", awayClrs[0]);
+	homeText.innerHTML = homeCode;
+	awayText.innerHTML = awayCode;
+
+	homeText.setAttribute("x", 0.25 * svgdims[0] - homeText.getBBox().width/2);
+	awayText.setAttribute("x", 0.75 * svgdims[0] - awayText.getBBox().width/2);
+	
+}
 
 
 
