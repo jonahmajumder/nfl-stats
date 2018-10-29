@@ -61,6 +61,10 @@ var svg = d3.select("#histWindow").attr("width", svgWidth).attr("height", svgHei
     .append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// var tooltip = document.createElementNS(XMLNS, "text");
+// tooltip.setAttribute("id", "svgtooltip");
+// tooltip.innerHTML = "Test Text";
+
 var xScale = d3.scaleLinear()
 	.rangeRound([0, width]);
 
@@ -162,8 +166,6 @@ xax.append("text")
 	.attr("y", 35)
 	.attr("font-size", axlbl_size)
 	.text("Value");
-
-console.log(d3.select("#histWindow").selectAll("g"));
 
 var yax = svg.append("g")
 	.attr("class", "axis")

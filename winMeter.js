@@ -1,14 +1,13 @@
 // winMeter.js
 
 function genMeterHere (parent, svgdims) {
-var xmlns = "http://www.w3.org/2000/svg";
 
 if ((typeof(svgdims) === "undefined") || (svgdims.length != 2)) {
 	var svgdims = [100, 100];
 }
 
 // make svg itself
-var svg = document.createElementNS(xmlns, "svg");
+var svg = document.createElementNS(XMLNS, "svg");
 
 var existingMeters = document.getElementsByClassName("meter");
 
@@ -24,9 +23,9 @@ var dialOuterRad = 0.8 * meterWorkingRadius;
 var dialInnerRad = 0.05 * svgdims[1];
 
 // meter border circles
-var outerCircle = document.createElementNS(xmlns, "circle");
+var outerCircle = document.createElementNS(XMLNS, "circle");
 outerCircle.setAttribute("class", "outerBorder");
-var innerCircle = document.createElementNS(xmlns, "circle");
+var innerCircle = document.createElementNS(XMLNS, "circle");
 innerCircle.setAttribute("class", "innerBorder");
 
 outerCircle.setAttribute("stroke", "grey");
@@ -47,10 +46,10 @@ svg.appendChild(outerCircle);
 svg.appendChild(innerCircle);
 
 // create ticks around border
-var gtick = document.createElementNS(xmlns, 'g');
+var gtick = document.createElementNS(XMLNS, 'g');
 svg.appendChild(gtick);
 
-var tix = document.createElementNS(xmlns, 'path');
+var tix = document.createElementNS(XMLNS, 'path');
 tix.setAttribute("class", "tix");
 tix.setAttribute("stroke", "white");
 
@@ -85,7 +84,7 @@ tix.setAttribute("d", dstr);
 gtick.appendChild(tix);
 
 // create dial path element and little "pin" in middle
-var dial = document.createElementNS(xmlns, 'path');
+var dial = document.createElementNS(XMLNS, 'path');
 dial.setAttribute("class", "dial");
 
 dial.setAttribute("fill", "lightgrey");
@@ -102,7 +101,7 @@ dstr += "l " + (-1*dialInnerRad) + "," + (-1*dialOuterRad) + " ";
 dstr += "z ";
 dial.setAttribute("d", dstr);
 
-var dialPin = document.createElementNS(xmlns, 'circle')
+var dialPin = document.createElementNS(XMLNS, 'circle')
 dialPin.setAttribute("class", "dialPin");
 dialPin.setAttribute("cx", svgdims[0]/2);
 dialPin.setAttribute("cy", svgdims[1]/2);
@@ -115,19 +114,19 @@ svg.appendChild(dial);
 svg.appendChild(dialPin);
 
 // make team labels
-var ghome = document.createElementNS(xmlns, "g");
-var gaway = document.createElementNS(xmlns, "g");
+var ghome = document.createElementNS(XMLNS, "g");
+var gaway = document.createElementNS(XMLNS, "g");
 svg.appendChild(ghome);
 svg.appendChild(gaway);
 
-var homeRect = document.createElementNS(xmlns, "rect");
-var awayRect = document.createElementNS(xmlns, "rect");
+var homeRect = document.createElementNS(XMLNS, "rect");
+var awayRect = document.createElementNS(XMLNS, "rect");
 
 homeRect.setAttribute("class", "homeTeamRect");
 awayRect.setAttribute("class", "awayTeamRect");
 
-var homeText = document.createElementNS(xmlns, "text");
-var awayText = document.createElementNS(xmlns, "text");
+var homeText = document.createElementNS(XMLNS, "text");
+var awayText = document.createElementNS(XMLNS, "text");
 
 homeText.setAttribute("class", "homeTeamText");
 awayText.setAttribute("class", "awayTeamText");

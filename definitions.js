@@ -6,4 +6,6 @@ var pages = [
     {name: "NFL Win Probabilities", link: "winProbs.html"},
 ];
 
+var XMLNS = "http://www.w3.org/2000/svg";
+
 var margin_width = 4;
