@@ -99,26 +99,29 @@ function scrapeURL(url) {
 	console.log("Scraping from url " + url + ".");
 	var htmlString;
 	var newurl = "https://allorigins.me/get?url=" + encodeURIComponent(url) + "&callback=?";
-	disableGetButton(true);
 	clearData();
+	disableGetButton(true);
 	var elem, table;
 
-	var scrapePromise = new Promise ((resolve, reject) => {
-		$.getJSON(newurl).then( function(body, status) {	
-			htmlString = body.contents;
-			resolve(htmlString);
+	try {
+		var scrapePromise = new Promise ((resolve, reject) => {
+			$.getJSON(newurl).then( function(body, status) {
+				htmlString = body.contents;
+				resolve(htmlString);
+			});
 		});
-	});
-
-	scrapePromise.then((html) => {
-		elem = string2doc(html);
-		table = elem.getElementsByTagName("table")[0];
-		parseTable(table);
-		disableGetButton(false);
-		fillCategories();
-		return elem;
-	});
-
+		scrapePromise.then((html) => {
+			elem = string2doc(html);
+			table = elem.getElementsByTagName("table")[0];
+			parseTable(table);
+			disableGetButton(false);
+			fillCategories();
+			return elem;
+		});
+	}
+	catch (SyntaxError) {
+		console.log("Error scraping.");
+	}
 }
 
 

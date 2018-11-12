@@ -18,7 +18,7 @@ svg.setAttribute("height", svgdims[1]);
 
 parent.appendChild(svg);
 
-var meterWorkingRadius = 0.4 * Math.min(svgdims[0], svgdims[1]);
+var meterWorkingRadius = 0.35 * Math.min(...svgdims);
 var dialOuterRad = 0.8 * meterWorkingRadius;
 var dialInnerRad = 0.05 * svgdims[1];
 
@@ -140,7 +140,7 @@ gaway.appendChild(awayText);
 homeText.setAttribute("font-family", "Verdana");
 awayText.setAttribute("font-family", "Verdana");
 
-// change this for teams!!!!!!!!!!
+// this gets changed for teams
 // ----------------------------------------
 homeRect.setAttribute("stroke", "black");
 awayRect.setAttribute("stroke", "black");
@@ -185,14 +185,49 @@ awayRect.setAttribute("rx", 2 + Math.min(...svgdims)/75);
 homeRect.setAttribute("ry", 2 + Math.min(...svgdims)/75);
 awayRect.setAttribute("ry", 2 + Math.min(...svgdims)/75);
 
+
+var gscore = document.createElementNS(XMLNS, "g");
+svg.appendChild(gscore);
+
+var scoreRect = document.createElementNS(XMLNS, "rect");
+var scoreText = document.createElementNS(XMLNS, "text");
+scoreRect.setAttribute("class", "scoreRect");
+scoreText.setAttribute("class", "scoreText");
+
+gscore.appendChild(scoreRect);
+gscore.appendChild(scoreText);
+
+scoreText.setAttribute("font-size", 0.8*labelFSize);
+scoreText.setAttribute("font-family", "Verdana");
+scoreRect.setAttribute("stroke", "black");
+scoreRect.setAttribute("fill", "lightgrey");
+scoreText.setAttribute("fill", "black");
+scoreText.innerHTML = "TM1 wins XX-XX";
+
+var scoreTextWidth = scoreText.getBBox().width;
+var scoreTextHeight = scoreText.getBBox().height;
+
+scoreText.setAttribute("y", 0.25 * svgdims[1] + scoreTextHeight/3);
+scoreText.setAttribute("x", 0.5 * svgdims[0] - scoreTextWidth/2);
+scoreRect.setAttribute("y", 0.15 * svgdims[1]);
+scoreRect.setAttribute("x", 0.1 * svgdims[0]);
+scoreRect.setAttribute("width", 0.8 * svgdims[0]);
+scoreRect.setAttribute("height", 0.2 * Math.min(...svgdims));
+scoreRect.setAttribute("stroke-width", 2 + Math.min(...svgdims)/75);
+scoreRect.setAttribute("rx", 2 + Math.min(...svgdims)/75);
+scoreRect.setAttribute("ry", 2 + Math.min(...svgdims)/75);
+
+scoreRect.setAttribute("visibility", "hidden");
+scoreText.setAttribute("visibility", "hidden");
+
 return svg;
 
 }
 
 function setMeterPercentage (metersvg, pct) {
 	var svgdims = [parseInt(metersvg.getAttribute("width")), parseInt(metersvg.getAttribute("height"))];
-
 	var validatedPct = Math.min(Math.max(pct, 0), 100);
+
 	var angle = validatedPct/100*180 - 90;
 
 	var dial = metersvg.getElementsByClassName("dial")[0];
@@ -241,6 +276,28 @@ function setMeterTeams(metersvg, homeCode, awayCode) {
 	homeText.setAttribute("x", 0.25 * svgdims[0] - homeText.getBBox().width/2);
 	awayText.setAttribute("x", 0.75 * svgdims[0] - awayText.getBBox().width/2);
 	
+}
+
+function setMeterScore(metersvg, winningTeamCode, winningScore, losingScore) {
+	var svgdims = [parseInt(metersvg.getAttribute("width")), parseInt(metersvg.getAttribute("height"))];
+
+	winningTeamCode = winningTeamCode.toUpperCase();
+	var winningTm = teams[winningTeamCode];
+	var winningClrs = winningTm["colors"];
+
+	var scoreRect = metersvg.getElementsByClassName("scoreRect")[0];
+	var scoreText = metersvg.getElementsByClassName("scoreText")[0];
+
+	scoreRect.setAttribute("stroke", winningClrs[0]);
+	scoreRect.setAttribute("fill", winningClrs[1]);
+	scoreText.setAttribute("fill", winningClrs[0]);
+	scoreText.innerHTML = winningTeamCode + " wins " + winningScore + "-" + losingScore;
+
+	scoreText.setAttribute("x", 0.5 * svgdims[0] - scoreText.getBBox().width/2)
+
+	scoreRect.setAttribute("visibility", "visible");
+	scoreText.setAttribute("visibility", "visible");
+
 }
 
 

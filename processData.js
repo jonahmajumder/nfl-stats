@@ -31,7 +31,6 @@ function prepareData() {
     var colSelector = document.getElementById("histColSelector");
     var chosenColKey = colSelector.value;
     var chosenIndex = colList.indexOf(chosenColKey);
-    var playerIndex = colList.indexOf(chosenColKey);
 
     var player_array;
     var pre_data = [];
@@ -65,5 +64,12 @@ function prepareData() {
     var data_labels = data_array.map(function(row) {return row[0]});
 
     drawHist(data, data_labels);
-
 }
+
+
+// function randomStat() {
+//     var years = document.getElementById("yearSelect");
+//     var yearNums = [...years.children].map(elem => parseFloat(elem.innerHTML));
+//     console.log(yearNums.map(n => ));
+
+// }

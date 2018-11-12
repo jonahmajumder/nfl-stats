@@ -1,6 +1,6 @@
 // meterDefs
 
-var meterSize = 200;
+var meterSize = 150;
 
 teams = {
 
@@ -33,8 +33,8 @@ teams = {
 "PIT": {"fullname": "Pittsburgh Steelers", "colors": ["rgb(255,182,18)", "rgb(16,24,32)"]},
 "SF": {"fullname": "San Francisco 49ers", "colors": ["rgb(170,0,0)", "rgb(173,153,93)"]},
 "SEA": {"fullname": "Seattle Seahawks", "colors": ["rgb(0,34,68)", "rgb(105,190,40)"]},
-"TB": {"fullname": "Tampa Bay Buccaneers", "colors": ["rgb(213,10,10)", "rgb(10,10,8)"]},
+"TB": {"fullname": "Tampa Bay Buccaneers", "colors": ["rgb(10,10,8)", "rgb(213,10,10)"]},
 "TEN": {"fullname": "Tennessee Titans", "colors": ["rgb(68,149,209)", "rgb(0,42,92)"]},
-"WAS": {"fullname": "Washington Redskins", "colors": ["rgb(63,16,16)", "rgb(255,182,18)"]},
+"WSH": {"fullname": "Washington Redskins", "colors": ["rgb(63,16,16)", "rgb(255,182,18)"]},
 
 }

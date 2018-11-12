@@ -51,19 +51,25 @@ var margin = {top: 20, right: 30, bottom: 50, left: 60},
 	width = svgWidth - margin.left - margin.right,
 	height = svgHeight - margin.top - margin.bottom;
 
-var ttdiv = d3.select("#histContainer").append("div")
-	.attr("class", "tooltip")
-	.attr("id", "histToolTip")
-	.style("opacity", 0);
-
 var svg = d3.select("#histWindow").attr("width", svgWidth).attr("height", svgHeight)
     .attr("class", "bar-chart")
     .append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// var tooltip = document.createElementNS(XMLNS, "text");
-// tooltip.setAttribute("id", "svgtooltip");
-// tooltip.innerHTML = "Test Text";
+var ttg = document.createElementNS(XMLNS, "g");
+
+var tooltip = document.createElementNS(XMLNS, "text");
+tooltip.setAttribute("id", "tooltiptext");
+tooltip.setAttribute("fill", "black");
+tooltip.setAttribute("visibility", "hidden");
+
+var tooltipRect = document.createElementNS(XMLNS, "rect");
+tooltipRect.setAttribute("id", "tooltiprect");
+tooltipRect.setAttribute("fill", "white");
+tooltipRect.setAttribute("rx", "5");
+tooltipRect.setAttribute("ry", "5");
+tooltipRect.setAttribute("visibility", "hidden");
+
 
 var xScale = d3.scaleLinear()
 	.rangeRound([0, width]);
@@ -101,25 +107,6 @@ else {
 
 var bindata = histgen(data_with_labels); // returns array of bins with labels
 
-var bin, labelstr, labels = [];
-if (use_labels) {
-	for (var i = 0; i < bindata.length; i++) {
-		labelstr = ":";
-		bin = bindata[i];
-		bin.sort(descendingLabeledDataComparison);
-		for (var j = 0; j < bin.length; j++) {
-			labelstr = labelstr + "<br/>&bull; " + bin[j].label;
-			if (dataIsNumeric) {
-				labelstr = labelstr + ': ' + bin[j].value;
-			}
-		}
-		labels.push(labelstr);
-	}
-}
-else {
-	var labels = bindata.map(function() {return "";});
-}
-
 function correctBinEdges(bindata) {
 	var incr = bindata[1].x1 - bindata[1].x0;
 	bindata[0].x0 = bindata[0].x1 - incr;
@@ -127,6 +114,33 @@ function correctBinEdges(bindata) {
 }
 
 bindata = correctBinEdges(bindata);
+
+var bin, labellist, labels = [];
+if (use_labels) {
+	for (var i = 0; i < bindata.length; i++) {
+		labellist = [];
+		if (dataIsNumeric) {
+ 			labellist.push(bindata[i].x0 + " to " + bindata[i].x1 + ":");
+ 		}
+ 		else {
+ 			labellist.push(opts[i] + ":");
+ 		}
+		bin = bindata[i];
+		bin.sort(descendingLabeledDataComparison);
+		for (var j = 0; j < bin.length; j++) {
+			if (dataIsNumeric) {
+				labellist.push("&bull; " + bin[j].label + ': ' + bin[j].value);
+			}
+			else {
+				labellist.push("&bull; " + bin[j].label);
+			}
+		}
+		labels.push(labellist);
+	}
+}
+else {
+	var labellist = bindata.map(function() {return [];});
+}
 
 var bincounts = bindata.map(function(bin) {return bin.length}) // get length of each bin
 var binleftedges = bindata.map(function(bin) {return bin.x0})
@@ -199,6 +213,7 @@ var barChart = svg.selectAll("rect")
     .data(bincounts) // the histogram bincounts
     .enter() // creating the rectangles
     .append("rect")
+    .attr("class", "bar")
     .attr("height", function(d) {
         return height - yScale(d);
     })
@@ -209,30 +224,51 @@ var barChart = svg.selectAll("rect")
     .attr("transform", function (d, i) { // i in callback is the index in data
          var translate = [xScale(binleftedges[i]) + barPadding/2, 0];
          return "translate("+ translate +")";
-    })
-    .on("mouseover", function(d, i) {
-    	ttdiv.transition()
- 		.duration(200)
- 		.style("opacity", .9);
- 		ttstr = labels[i];
- 		xloc = svgLeft + xScale(binleftedges[i]) + margin.left + barWidth/2;
- 		yloc = svgTop + yScale(d) + margin.top;
- 		if (dataIsNumeric) {
- 			ttdiv.html("<u>" + bindata[i].x0 + " to " + bindata[i].x1 + "</u>" + ttstr);
- 		}
- 		else {
- 			ttdiv.html("<u>" + opts[i] + "</u>" + ttstr);
- 		}
- 		ttdiv.style("top", yloc + "px");
- 		ttdiv.style("left", xloc + "px");
-    })
-    .on("mouseout", function(d) {
-    	ttdiv.transition()
- 		.duration(200)
- 		.style("opacity", 0);
-    })
-    ;
+    });
+
+document.getElementById("histWindow").appendChild(ttg);
+ttg.appendChild(tooltipRect);
+ttg.appendChild(tooltip);
+
+var textBox;
+var ttBorder = 5;
+barChart.on("mouseover", function(d, i) {
+		xloc = xScale(binleftedges[i]) + margin.left + barWidth/2;
+		yloc = yScale(d) + margin.top;
+		tooltip.setAttribute("y", yloc + "px");
+		tooltip.setAttribute("x", (xloc) + "px");
+		makeTooltipText(tooltip, labels[i]);
+		textBox = tooltip.getBBox();
+		tooltipRect.setAttribute("width", textBox.width + 2*ttBorder);
+		tooltipRect.setAttribute("height", textBox.height + 2*ttBorder);
+		tooltipRect.setAttribute("x", (xloc - ttBorder) + "px");
+		tooltipRect.setAttribute("y", (yloc - ttBorder + 0.2*(textBox.height/labels[i].length)) + "px");
+		tooltip.setAttribute("visibility", "visible");
+		tooltipRect.setAttribute("visibility", "visible");
+})
+.on("mouseout", function(d) {
+	// need to make these fade out...
+	tooltip.setAttribute("visibility", "hidden");
+	tooltipRect.setAttribute("visibility", "hidden");
+})
+;
 
 loadSectionSelector();
+
+}
+
+function makeTooltipText(textelem, labellist) {
+	var newtspan;
+	$("tspan").remove()
+	for (var i = 0; i < labellist.length; i++) {
+		newtspan = document.createElementNS(XMLNS, "tspan");
+		newtspan.innerHTML = labellist[i];
+		newtspan.setAttribute("dy", "1.2em");
+		newtspan.setAttribute("x", textelem.getAttribute("x"));
+		if (i==0) {
+			newtspan.setAttribute("text-decoration", "underline");
+		}
+		textelem.appendChild(newtspan);
+	}
 
 }
