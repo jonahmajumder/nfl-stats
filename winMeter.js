@@ -18,6 +18,14 @@ svg.setAttribute("height", svgdims[1]);
 
 parent.appendChild(svg);
 
+var gamelink = document.createElementNS(XMLNS, "a");
+gamelink.setAttribute("class", "gamelink");
+svg.appendChild(gamelink);
+
+var maing = document.createElementNS(XMLNS, "g");
+maing.setAttribute("class", "mainmeter");
+gamelink.appendChild(maing);
+
 var meterWorkingRadius = 0.35 * Math.min(...svgdims);
 var dialOuterRad = 0.8 * meterWorkingRadius;
 var dialInnerRad = 0.05 * svgdims[1];
@@ -42,12 +50,12 @@ innerCircle.setAttribute("cy", svgdims[1]/2);
 outerCircle.setAttribute("r", meterWorkingRadius + 5);
 innerCircle.setAttribute("r", meterWorkingRadius);
 
-svg.appendChild(outerCircle);
-svg.appendChild(innerCircle);
+maing.appendChild(outerCircle);
+maing.appendChild(innerCircle);
 
 // create ticks around border
 var gtick = document.createElementNS(XMLNS, 'g');
-svg.appendChild(gtick);
+maing.appendChild(gtick);
 
 var tix = document.createElementNS(XMLNS, 'path');
 tix.setAttribute("class", "tix");
@@ -110,8 +118,10 @@ dialPin.setAttribute("r", 0.3*dialInnerRad);
 dialPin.setAttribute("stroke", "black");
 dialPin.setAttribute("stroke-width", 2);
 
-svg.appendChild(dial);
-svg.appendChild(dialPin);
+maing.appendChild(dial);
+maing.appendChild(dialPin);
+
+
 
 // make team labels
 var ghome = document.createElementNS(XMLNS, "g");
@@ -298,6 +308,12 @@ function setMeterScore(metersvg, winningTeamCode, winningScore, losingScore) {
 	scoreRect.setAttribute("visibility", "visible");
 	scoreText.setAttribute("visibility", "visible");
 
+}
+
+function setMeterGameLink (metersvg, link) {
+	var gamelink = metersvg.getElementsByClassName("gamelink")[0];
+
+	gamelink.setAttribute("href", link);
 }
 
 

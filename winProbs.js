@@ -136,6 +136,9 @@ function game_info(games) {
 
 		competition = games[i]["competitions"][0];
 		competitors = competition["competitors"];
+
+		game_info[i]["game_link"] =
+			games[i]["links"][dictIndex(games[i]["links"], "text", "Gamecast")]["href"];
 		
 		game_info[i]["homeTeamScore"] = parseFloat(competitors[dictIndex(competitors, "homeAway", "home")]["score"]);
 		game_info[i]["awayTeamScore"] = parseFloat(competitors[dictIndex(competitors, "homeAway", "away")]["score"]);
@@ -208,6 +211,8 @@ function addGameMeters(game_info) {
 
 		setMeterTeams(newMeter, game_info[i]["homeTeamCode"], game_info[i]["awayTeamCode"]);
 		setMeterPercentage(newMeter, game_info[i]["awayTeamWinProb"]);
+
+		setMeterGameLink(newMeter, game_info[i]["game_link"]);
 
 		if (game_info[i]["game_status"] == "post") {
 			setMeterScore(newMeter, game_info[i]["winnerCode"],
