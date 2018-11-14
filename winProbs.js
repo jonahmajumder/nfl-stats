@@ -89,18 +89,26 @@ function getNFLScores() {
 	var newurl = "http://www.whateverorigin.org/get?url=" + encodeURIComponent(url) + "&callback=?";
 	var games;
 
-	var scrapePromise = new Promise ((resolve, reject) => {
-		resolve($.getJSON(newurl)); // pass this to then fn
-	});
-
-	scrapePromise.then((resp) => {
-		var JSONcontents = JSON.parse(resp["contents"]);
+	$.getJSON(url, function(data) {
+		var JSONcontents = data;
 		setTitle(JSONcontents["week"]["number"]);
 		games = JSONcontents["events"];
 		info = game_info(games);
 		addGameMeters(info);
-		// console.log(info);
+		return info;
 	});
+	// var scrapePromise = new Promise ((resolve, reject) => {
+	// 	resolve($.getJSON(newurl)); // pass this to then fn
+	// });
+
+	// scrapePromise.then((resp) => {
+	// 	var JSONcontents = JSON.parse(resp["contents"]);
+	// 	// setTitle(JSONcontents["week"]["number"]);
+	// 	// games = JSONcontents["events"];
+	// 	// info = game_info(games);
+	// 	// addGameMeters(info);
+	// 	// console.log(info);
+	// });
 
 }
 
