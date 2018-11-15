@@ -91,6 +91,7 @@ function getNFLScores() {
 
 	$.getJSON(url, function(data) {
 		var JSONcontents = data;
+		// console.log(data);
 		setTitle(JSONcontents["week"]["number"]);
 		games = JSONcontents["events"];
 		info = game_info(games);
@@ -185,16 +186,21 @@ function game_info(games) {
 			game_info[i]["awayTeamWinProb"] = 100*(competitors[dictIndex(competitors, "homeAway", "away")]["winner"]);
 		}
 		else if (gmstate == "pre") {
-			oddstr = competition["odds"][0]["details"];
-			focusTmCode = oddstr.split(" ")[0];
-			focusTmLine = parseFloat(oddstr.split(" ")[1]);
-			focusTmHomeAway = competitors[competitors.map(c=>c["team"]["abbreviation"]).indexOf(focusTmCode)]["homeAway"];
+			if (competition["odds"] != undefined) {
+				oddstr = competition["odds"][0]["details"];
+				focusTmCode = oddstr.split(" ")[0];
+				focusTmLine = parseFloat(oddstr.split(" ")[1]);
+				focusTmHomeAway = competitors[competitors.map(c=>c["team"]["abbreviation"]).indexOf(focusTmCode)]["homeAway"];
 
-			if (focusTmHomeAway == "away") {
-				game_info[i]["awayTeamWinProb"] = line2winProb_analytical(focusTmLine);
+				if (focusTmHomeAway == "away") {
+					game_info[i]["awayTeamWinProb"] = line2winProb_analytical(focusTmLine);
+				}
+				else {
+					game_info[i]["awayTeamWinProb"] = line2winProb_analytical(-1*focusTmLine);
+				}
 			}
 			else {
-				game_info[i]["awayTeamWinProb"] = line2winProb_analytical(-1*focusTmLine);
+				game_info[i]["awayTeamWinProb"] = 50;
 			}
 		}
 		game_info[i]["gamestruct"] = gamestruct;
