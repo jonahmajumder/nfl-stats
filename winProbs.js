@@ -91,7 +91,7 @@ function getNFLScores() {
 
 	$.getJSON(url, function(data) {
 		var JSONcontents = data;
-		// console.log(data);
+		console.log(data);
 		setTitle(JSONcontents["week"]["number"]);
 		games = JSONcontents["events"];
 		info = game_info(games);

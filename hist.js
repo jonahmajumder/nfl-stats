@@ -33,6 +33,9 @@ if (isNaN(dataset[0])) {
 	// console.log(opts);
 }
 
+var dataIsInt = dataset.every(d => decimalPlaces(d%1,5) == 0);
+// console.log(dataIsInt)
+
 var histcont = document.getElementById("histContainer");
 var drect = histcont.getBoundingClientRect();
 
@@ -156,8 +159,6 @@ var xax = svg.append("g")
 	.attr("transform", "translate(0," + height + ")")
 	.call(d3.axisBottom(xScale));
 
-
-
 // auto adjust the xScale so the beginning and end coincide with tick marks
 // this will be auto adjusted to the nearest 1,2, or 5 * 10^n
 xIncr = xScale.ticks()[1]-xScale.ticks()[0];
@@ -168,8 +169,10 @@ if (dataIsNumeric) {
 else {
 	xUpperLim = opts.length;
 	xLowerLim = 0;
-	xScale.ticks(0, opts.length, 1);
 }
+
+console.log(xScale.ticks());
+
 xScale.domain([xLowerLim, xUpperLim])
 xax.call(d3.axisBottom(xScale));
 
