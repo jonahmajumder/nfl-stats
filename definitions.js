@@ -15,3 +15,5 @@ function decimalPlaces(num, places) {
 	fctr = 10**places;
 	return Math.round(num*fctr)/fctr;
 }
+
+console.log(window.location.pathname);
